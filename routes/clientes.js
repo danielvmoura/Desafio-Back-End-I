@@ -1,24 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
+const clienteController = require('../controllers/clienteController');
+
 /* GET clientes listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource GET');
-});
+router.get('/', clienteController.findAll);
 
 /* PUT clientes listing. */
-router.put('/', function(req, res, next) {
-  res.send('respond with a resource PUT');
-});
+router.put('/', clienteController.update);
 
 /* POST clientes listing. */
-router.post('/', function(req, res, next) {
-  res.send('respond with a resource POST');
-});
+router.post('/', clienteController.save);
 
 /* DELETE clientes listing. */
-router.delete('/', function(req, res, next) {
-  res.send('respond with a resource DELETE');
-});
+router.delete('/', clienteController.remove);
 
 module.exports = router;
