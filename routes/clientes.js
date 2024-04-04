@@ -8,18 +8,10 @@ const idadeMiddleware = require('../middlewares/idadeMiddleware');
 const emailMiddleware = require('../middlewares/emailMiddleware')
 
 /* GET clientes listing. */
-router.get('/', nomeMiddleware.validateName, 
-                sobrenomeMiddleware.validateFamilyName,
-                idadeMiddleware.validateAge, 
-                emailMiddleware.validateEmail, 
-                clienteController.findAll);
+router.get('/', clienteController.findAll);
 
 /* PUT clientes listing. */
-router.put('/', nomeMiddleware.validateName, 
-                sobrenomeMiddleware.validateFamilyName,
-                idadeMiddleware.validateAge, 
-                emailMiddleware.validateEmail,
-                clienteController.update);
+router.put('/',  clienteController.update);
 
 /* POST clientes listing. */
 router.post('/',  nomeMiddleware.validateName, 
@@ -29,10 +21,6 @@ router.post('/',  nomeMiddleware.validateName,
                   clienteController.save);
 
 /* DELETE clientes listing. */
-router.delete('/:id', nomeMiddleware.validateName, 
-                      sobrenomeMiddleware.validateFamilyName,
-                      idadeMiddleware.validateAge, 
-                      emailMiddleware.validateEmail,
-                      clienteController.remove);
+router.delete('/:id', clienteController.remove);
 
 module.exports = router;
