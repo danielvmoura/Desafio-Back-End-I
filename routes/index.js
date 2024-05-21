@@ -1,15 +1,26 @@
-var express = require('express');
-var router = express.Router();
+// index.js
 
+const express = require('express');
+const router = express.Router();
 const mysql = require('mysql2/promise');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
- mysql.createConnection({host: 'localhost',user: 'DanielVMoura',password: 'Dm31032003@',
- database: 'desafio',port: 3307
- }).then((connection) => {connection.query('SELECT * FROM clientes, produtos;')
- .then((result) => {res.send(result[0]);});
- });
+router.get('/', async (req, res, next) => {
+  try {
+    const connection = await mysql.createConnection({
+      host: 'localhost',
+      user: 'DanielVMoura',
+      password: 'Dm31032003@',
+      database: 'desafio',
+      port: 3307
+    });
+
+    const result = await connection.query('SELECT * FROM clientes, produtos;');
+    res.send(result[0]);
+  } catch (error) {
+    console.error('Erro ao consultar dados:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
 });
 
 module.exports = router;

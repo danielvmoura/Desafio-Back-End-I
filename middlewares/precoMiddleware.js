@@ -1,3 +1,5 @@
+// precoMiddleware.js
+
 const validatePrice = (request, response, next) => {
   const { body } = request;
   if (body.preco === undefined) {

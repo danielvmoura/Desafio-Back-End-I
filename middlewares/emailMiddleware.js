@@ -1,3 +1,5 @@
+// emailMiddleware.js
+
 const validateEmail = (request, response, next) => {
   const { body } = request;
   if (body.email === undefined) {
