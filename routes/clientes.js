@@ -5,16 +5,16 @@ const clienteController = require('../controllers/clienteController');
 const nomeMiddleware = require('../middlewares/nomeMiddleware');
 const sobrenomeMiddleware = require('../middlewares/sobrenomeMiddleware');
 const idadeMiddleware = require('../middlewares/idadeMiddleware');
-const emailMiddleware = require('../middlewares/emailMiddleware')
+const emailMiddleware = require('../middlewares/emailMiddleware');
 
 /* GET clientes listing. */
 router.get('/', clienteController.findAll);
 
 /* PUT clientes listing. */
-router.put('/',  clienteController.update);
+router.put('/', clienteController.update);
 
 /* POST clientes listing. */
-router.post('/',  nomeMiddleware.validateName, 
+router.post('/', nomeMiddleware.validateName, 
                   sobrenomeMiddleware.validateFamilyName,
                   idadeMiddleware.validateAge, 
                   emailMiddleware.validateEmail,
