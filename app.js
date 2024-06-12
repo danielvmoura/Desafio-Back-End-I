@@ -1,5 +1,3 @@
-// app.js
-
 require('dotenv').config(); // Certifique-se de que dotenv está configurado no início
 var createError = require('http-errors');
 var express = require('express');
@@ -27,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+const verifyToken = require('./middlewares/authMiddleware');
 app.use('/clientes', verifyToken, clientesRouter); // Use o middleware de autenticação
 app.use('/produtos', produtosRouter);
 app.use('/auth', authRouter); // Nova rota para autenticação
