@@ -1,9 +1,7 @@
-// clientes.js
-
 const express = require('express');
 const router = express.Router();
 const cacheService = require('../services/cacheService'); // Importe o serviço de cache aqui
-
+const verifyToken = require('../middlewares/authMiddleware'); // Middleware de autenticação
 const clienteController = require('../controllers/clienteController');
 const nomeMiddleware = require('../middlewares/nomeMiddleware');
 const sobrenomeMiddleware = require('../middlewares/sobrenomeMiddleware');
@@ -11,7 +9,7 @@ const idadeMiddleware = require('../middlewares/idadeMiddleware');
 const emailMiddleware = require('../middlewares/emailMiddleware');
 
 // GET /clientes
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => { // Adicione verifyToken
   try {
     const clientes = await cacheService.consultarClientes(); // Use o serviço de cache aqui
     res.json(clientes);
@@ -22,16 +20,16 @@ router.get('/', async (req, res) => {
 });
 
 // PUT /clientes
-router.put('/', clienteController.update);
+router.put('/', verifyToken, clienteController.update); // Adicione verifyToken
 
 // POST /clientes
-router.post('/', nomeMiddleware.validateName, 
+router.post('/', verifyToken, nomeMiddleware.validateName, 
                   sobrenomeMiddleware.validateFamilyName,
                   idadeMiddleware.validateAge, 
                   emailMiddleware.validateEmail,
-                  clienteController.save);
+                  clienteController.save); // Adicione verifyToken
 
 // DELETE /clientes/:id
-router.delete('/:id', clienteController.remove);
+router.delete('/:id', verifyToken, clienteController.remove); // Adicione verifyToken
 
 module.exports = router;
