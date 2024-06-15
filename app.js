@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
 const verifyToken = require('./middlewares/authMiddleware');
 app.use('/clientes', verifyToken, clientesRouter); // Use o middleware de autenticação
 app.use('/produtos', produtosRouter);
@@ -44,11 +45,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-var port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
 });
 
 module.exports = app;
