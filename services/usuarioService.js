@@ -1,4 +1,5 @@
-const db = require('../configs/dbConfiguration'); 
+const db = require('../configs/dbConfiguration');
+
 const authenticate = async (usuario, senha) => {
   const [rows] = await db.query('SELECT * FROM usuarios WHERE usuario = ? AND senha = ?', [usuario, senha]);
   return rows[0];

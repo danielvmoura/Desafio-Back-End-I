@@ -1,7 +1,10 @@
 // tests/auth.test.js
 
 const request = require('supertest');
-const app = require('../app'); // Caminho para o arquivo principal da sua aplicação
+const app = require('../app.js'); // Caminho para o arquivo principal da sua aplicação
+
+jest.setTimeout(60000); // Tempo limite de 60 segundos
+
 
 describe('Auth Endpoints', () => {
   it('should register a new user', async () => {

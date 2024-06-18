@@ -1,7 +1,9 @@
-// tests/clientes.test.js
-
 const request = require('supertest');
-const app = require('../app'); // Caminho para o arquivo principal da sua aplicação
+const app = require('../app.js'); // Caminho para o arquivo principal da sua aplicação
+require('dotenv').config();
+
+jest.setTimeout(60000); // Tempo limite de 60 segundos
+
 
 describe('Clientes Endpoints', () => {
   let token;
@@ -16,12 +18,16 @@ describe('Clientes Endpoints', () => {
       });
 
     token = response.body.token;
+    console.log('Generated Token:', token); // Adicione isto para ver o token gerado
+
+    // Verifique se o token foi gerado
+    expect(token).toBeDefined();
   });
 
   it('should get all clients', async () => {
     const res = await request(app)
       .get('/clientes')
-      .set('Authorization', token);
+      .set('Authorization', `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('length');
   });
@@ -29,7 +35,7 @@ describe('Clientes Endpoints', () => {
   it('should create a new client', async () => {
     const res = await request(app)
       .post('/clientes')
-      .set('Authorization', token)
+      .set('Authorization', `Bearer ${token}`)
       .send({
         nome: 'Test',
         sobrenome: 'User',
@@ -41,10 +47,9 @@ describe('Clientes Endpoints', () => {
 
   it('should update a client', async () => {
     const res = await request(app)
-      .put('/clientes')
-      .set('Authorization', token)
+      .put('/clientes/1') // Certifique-se de que a rota está correta
+      .set('Authorization', `Bearer ${token}`)
       .send({
-        id: 1,
         nome: 'Updated Name'
       });
     expect(res.statusCode).toEqual(200);
@@ -53,7 +58,7 @@ describe('Clientes Endpoints', () => {
   it('should delete a client', async () => {
     const res = await request(app)
       .delete('/clientes/1')
-      .set('Authorization', token);
+      .set('Authorization', `Bearer ${token}`);
     expect(res.statusCode).toEqual(200);
   });
 });
